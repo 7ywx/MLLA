@@ -11,7 +11,7 @@
 import torch
 import torch.nn as nn
 import torch.utils.checkpoint as checkpoint
-from timm.layers import DropPath, to_2tuple, trunc_normal_ # from timm.models.layers import DropPath, to_2tuple, trunc_normal_
+from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 
 
 # 多层感知机（Multilayer Perceptron）
@@ -34,7 +34,6 @@ class Mlp(nn.Module):
         return x
 
 
-# 卷积层
 class ConvLayer(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=0, dilation=1, groups=1,
                  bias=True, dropout=0, norm=nn.BatchNorm2d, act_func=nn.ReLU):
@@ -63,7 +62,7 @@ class ConvLayer(nn.Module):
             x = self.act(x)
         return x
 
-# 旋转位置编码（Rotary Position Embedding）
+
 class RoPE(torch.nn.Module):
     r"""Rotary Positional Embedding.
     """
@@ -446,9 +445,3 @@ class MLLA(nn.Module):
         x = self.forward_features(x)
         x = self.head(x)
         return x
-
-if __name__ == "__main__":
-    x = torch.randn(4, 32*32, 64)  # 一个示例输入，形状为 (batch_size, input_resolution = height * width， channels)
-    LA = LinearAttention(dim=64, input_resolution=[32,32], num_heads=8)
-    out = LA(x)
-    print(out.shape)  # 应该输出 torch.Size([4, 1024, 64])

@@ -448,7 +448,7 @@ class MLLA(nn.Module):
         return x
 
 if __name__ == "__main__":
-    x = torch.randn(4, 32*32, 64)  # 一个示例输入，形状为 (batch_size, input_resolution = height * width， channels)
+    x = torch.randn(4, 32*32, 64)  # 一个示例输入，形状为 (batch_size, input_resolution = height*width， channels)
     LA = LinearAttention(dim=64, input_resolution=[32,32], num_heads=8)
     out = LA(x)
     print(out.shape)  # 应该输出 torch.Size([4, 1024, 64])
